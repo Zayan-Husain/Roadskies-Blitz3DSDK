@@ -62,10 +62,14 @@ class player(y_entity):
     #end wall_loop#
 
     def collideObstacle(self):
-      front = self.collide("obstacle", 0, 0, -0.4);
-      # bottom = self.collide("obstacle", -0.2);
+      front = self.collide("obstacle", 0, 0, 0);
+      bottom = self.collide("obstacle", -1);
+      if bottom:
+        self.x = bottom.x+2
+        print("hit bottom")
+        return
       if front:
-        print("hit")
+        print("hit front")
         yoel_engine.change_world("game_over");
 
 ########################end player##################################

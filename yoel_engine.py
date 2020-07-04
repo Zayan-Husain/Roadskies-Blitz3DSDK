@@ -348,6 +348,7 @@ class y_entity:
               
                 #draw hitbox
                 if not self.visble:
+                    self.show_colide_box()
                     return
                 
                
