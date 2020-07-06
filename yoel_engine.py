@@ -16,7 +16,7 @@ def set_intervalt(func, sec):
 
 def set_interval( fps):
     while yoel_engine.game_loop:
-      rate(fps)  
+      rate(fps)
       yoel_engine.world.update()
     
 ###############end set_interval##########################################

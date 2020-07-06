@@ -35,6 +35,16 @@ class player(y_entity):
         yoel_engine.camera['z'] -= speed
         #move player
         y_entity.move_by(self,0,0,-speed)
+        
+        #######debug cam control#####
+        if y_input.get_key_down("i"):
+            yoel_engine.camera['x'] -= speed
+        if y_input.get_key_down("k"):
+            yoel_engine.camera['x'] += speed
+        if y_input.get_key_down("j"):
+            yoel_engine.camera['y'] += speed
+        if y_input.get_key_down("l"):
+            yoel_engine.camera['y'] -= speed
     #end move#   
 
     def jump(self):
@@ -66,10 +76,11 @@ class player(y_entity):
       bottom = self.collide("obstacle", -1);
       if bottom:
         self.x = bottom.x+2
-        print("hit bottom")
+        self.jumping = False;
+        #print("hit bottom")
         return
       if front:
-        print("hit front")
+        #print("hit front")
         yoel_engine.change_world("game_over");
 
 ########################end player##################################
