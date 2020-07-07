@@ -4,8 +4,8 @@ from obstacle import *
 class Tilemap:
   world = 0;
   lmap = 0
-  zmargin = -5
-  xmargin = -25
+  zmargin = -15
+  xmargin = -65
   def __init__(self, lev, w):
     self.world = w;
     name = level_names[lev];
@@ -13,7 +13,8 @@ class Tilemap:
 
   def make_tile(self, _id, j, i):
     if _id == 1:
-      b = box();
+      #b = box(size=(1,1,150));
+      b = box(size=(1,1,1));
       o = Obstacle(0, j, i, b, 0);
       self.world.add(o);
     if _id == 2:

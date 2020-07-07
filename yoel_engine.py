@@ -2,6 +2,7 @@ from visual import *
 from threading import *
 import array
 from random import *
+from time import clock
 
 ###############set_interval##########################################
 
@@ -16,7 +17,7 @@ def set_intervalt(func, sec):
 
 def set_interval( fps):
     while yoel_engine.game_loop:
-      rate(fps)
+      rate(fps)  
       yoel_engine.world.update()
     
 ###############end set_interval##########################################
@@ -134,6 +135,7 @@ class y_world:
     current_scene = 1
     name = ""
     not_active = False
+    dt = 1
     # methods
     
     def __init__(self):
@@ -153,7 +155,7 @@ class y_world:
             #print i
     #end hide all
     def update(self):
-
+        t = clock()
         if self.not_active:
             self.hide_all();
             return;
@@ -177,6 +179,7 @@ class y_world:
         #print yoel_engine.scene.center      
         yoel_engine.scene.forward =(yoel_engine.rot['x'],yoel_engine.rot['y'],yoel_engine.rot['z'] )
             #print #i
+        self.dt = clock()-t
     #end update
 
     def add(self,entity):
@@ -282,6 +285,7 @@ class y_entity:
      #end update
 
     def move_by(self,x=0,y=0,z=0):
+        dt = self.world.dt
         if not self.active:
              return
         hit = y_entity.collide(self,"all")
@@ -291,9 +295,9 @@ class y_entity:
         #    self.z += self.z;
             #return
        # else:
-        self.x += x;
-        self.y += y;
-        self.z += z;
+        self.x += x *dt;
+        self.y += y *dt;
+        self.z += z *dt;
         
 
     #end move_by

@@ -6,7 +6,9 @@ class player(y_entity):
     # attributes (properties)
     y_type = "player"
     jumping = False;
-    gravity = 0.3;
+    gravity = 52;
+    jumpf = 800;
+
 
     
    
@@ -32,7 +34,7 @@ class player(y_entity):
             y_entity.move_by(self,0,speed,0)
        
         #camera move
-        yoel_engine.camera['z'] -= speed
+        yoel_engine.camera['z'] -= speed *self.world.dt
         #move player
         y_entity.move_by(self,0,0,-speed)
         
@@ -49,7 +51,7 @@ class player(y_entity):
 
     def jump(self):
       if y_input.get_key_down("up") and not self.jumping:
-        self.move_by(5, 0, 0);
+        self.move_by(self.jumpf, 0, 0);
         self.jumping = True;
       self.move_by(-self.gravity, 0, 0);
 

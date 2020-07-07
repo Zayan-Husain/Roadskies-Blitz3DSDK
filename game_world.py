@@ -18,7 +18,7 @@ class game_world(y_world):
         self.tmap = Tilemap(self.currentLevel, self);
         self.tmap.make_tilemap()
 
-        yplayer = player(0,2,1,sphere(),0.2);
+        yplayer = player(0,2,-2,sphere(),10);
 
         self.add(yplayer);
         '''
