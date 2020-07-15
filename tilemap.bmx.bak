@@ -21,7 +21,7 @@ Type ytilemap Extends yentity
 			c1 =  bbCreateCube()
 			c2 =  bbCreateCube()
 			o:obstacle =  obstacle.Create( j,-5,i,c1,0 )
-			o2:obstacle =  obstacle.Create( j,-2,i,c2,0 )
+			o2:obstacle =  obstacle.Create( j,-3,i,c2,0 )
 			world.add(o)
 			world.add(o2)
 		EndIf

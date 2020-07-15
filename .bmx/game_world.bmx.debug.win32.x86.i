@@ -3,6 +3,7 @@ import blitz3d.blitz3dsdk
 import "player.bmx"
 import "obstacle.bmx"
 import "tilemap.bmx"
+import "maps.bmx"
 game_world^yworld{
 -New%()="_bb_game_world_New"
 -Delete%()="_bb_game_world_Delete"

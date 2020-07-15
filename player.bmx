@@ -49,7 +49,6 @@ Type player Extends yentity
 		'gravity
 		If y<-5  Then
 			jumping = False
-			sy(-5)
 		Else
 
 
