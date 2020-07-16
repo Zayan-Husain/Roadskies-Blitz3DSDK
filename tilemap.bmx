@@ -9,9 +9,9 @@ Import "yengine.bmx"
 Type ytilemap Extends yentity
 
 	'mx =margin x
-	Field lmap[][], mx = 0, mz = 0
+	Field lmap:TList, mx = -15, mz = 6, sx = 1, sz = 1
 	
-	Method make_tile( id, j, i )
+	Method make_tile( id:String, j, i )
 		
 		If id = 1 Then
 			c =  bbCreateCube()
@@ -39,6 +39,12 @@ Type ytilemap Extends yentity
 			world.add( o2 )
 			world.add( o3 )
 		EndIf
+		If id = 4 Then
+			c =  bbCreateCube()
+			bbEntityColor c, 255, 150, 0
+			o:obstacle =  obstacle.Create( j, -5, i, c, 0 )
+			world.add( o )
+		EndIf
 	
 	End Method'end make_tile
 	
@@ -46,17 +52,60 @@ Type ytilemap Extends yentity
 	Method make_tilemap()
 		
 		
-		rows = lmap.length 
-		cols = lmap[0].length 	
-	
-		For i = 0 To rows -1
-		cols = lmap[i].length
+		'init temp string andstring array
+		Local sr:String[]	
+		sx2 = sx 'space x
+		sz2 = sz 'space z
+		i = 0
+		
+		'loop all row strings in lmap
+		For s:String = EachIn lmap
+		  'convert each row to array
+		  sr = s.split( "," )
+		  cols = sr.length ' get columns length
+		  'loop all columns in row
 		  For j = 0 To cols -1
-			 make_tile( lmap[i][j], j+mx, i+mz )
+			 make_tile( String( sr[j] ), j + mx + sx2, i + mz + sz2 )
+			sx2 = sx2 +sx'incrament x space between tiles
 		  Next
+		i = i+1
+		sx2 = sx' reset space x
+		sz2 = sz2 +sz'incrament z space between tiles
 		Next
 	End Method'end make_tilemap
 	
+	
+	Method load_map( filen:String )
+		
+		'get file
+		mapfile = ReadFile( filen )
+		'if no file exit
+		If Not mapfile Then Return
+		Print "--map file "+filen+" loaded--"
+		'init temp string andstring array
+		Local sr:String[]
+		Local s:String
+		tempr:TList =  New TList 'temporery list to be converted to lmap
+
+		i = 0'iterator
+		'loop all file lines
+		While Not Eof( mapfile )
+			'read current line and put it on temp string
+			s = ReadLine( mapfile )
+			'Print s
+			'split string to array
+			'sr = s.split(",")
+			'add it to tile map array
+			tempr.AddLast s
+			i = i+1
+		Wend
+		
+		'copy to lmap
+		lmap = tempr.Copy()	
+
+		'close file stream
+		CloseStream mapfile
+	EndMethod 'end load_map
 
 	
 	Function Create:ytilemap( x:Float = 0, y:Float = 0, z:Float = 0, grafic:Int = 0, speed:Float = 0 )
@@ -74,6 +123,8 @@ Type ytilemap Extends yentity
 		Return e
 	
 	EndFunction
+	
+	
 
 EndType
 

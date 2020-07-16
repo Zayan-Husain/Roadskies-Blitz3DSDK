@@ -74,7 +74,7 @@
 	extrn	_brl_blitz_NullObjectError
 	extrn	_brl_linkedlist_TList
 	extrn	_brl_standardio_Print
-	public	___bb_road_skys_yengine
+	public	___bb_roadskies_vpython_yengine
 	public	__bb_tstw_Create
 	public	__bb_tstw_Delete
 	public	__bb_tstw_New
@@ -122,7 +122,7 @@
 	public	_bb_ytimer
 	public	_bb_yworld
 	section	"code" code
-___bb_road_skys_yengine:
+___bb_roadskies_vpython_yengine:
 	push	ebp
 	mov	ebp,esp
 	push	ebx
@@ -3195,7 +3195,7 @@ _302:
 	dd	-4
 	dd	0
 _272:
-	db	"C:/Users/zayan/OneDrive/Documents/blitzmax3d/road skys/yengine.bmx",0
+	db	"C:/Users/zayan/OneDrive/Documents/GitHub/Roadskies-VPython/yengine.bmx",0
 	align	4
 _271:
 	dd	_272

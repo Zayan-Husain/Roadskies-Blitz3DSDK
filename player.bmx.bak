@@ -31,9 +31,19 @@ Type player Extends yentity
 	
 		cam = world.ye.camera
 
-	   bbMoveEntity cam,0,0,cams
-	   bbMoveEntity grafic,0,0,cams
+	  ' bbMoveEntity cam,0,0,cams
+	   'bbMoveEntity grafic,0,0,cams
 		
+		If kd(200) Then 
+	    	bbMoveEntity cam,0,0,cams
+	    	bbMoveEntity grafic,0,0,cams
+		EndIf
+		If kd(208) Then  
+	    	bbMoveEntity cam,0,0,-cams
+	    	bbMoveEntity grafic,0,0,-cams
+			Print z
+		
+		EndIf
 
 		'left right
 		If kd(203) Then move_by(-speed,0,0)
@@ -49,7 +59,6 @@ Type player Extends yentity
 		'gravity
 		If y<-5  Then
 			jumping = False
-			sy(-5)
 		Else
 
 
@@ -67,14 +76,14 @@ Type player Extends yentity
 		front = collide("obstacle",0,-1,-1)
 		If top Then 
 			'move_by(0,2.5,0)
-			sy(top.y+2)
+			sy(top.y+1)
 			jumping =False
-			grav = 0
+			'grav = 0
 		Else
 			
 		EndIf
 		
-		If front Then Print "hit"
+		'If front Then Print "hit"
 		
 	
 	End Method'end collide

@@ -35,11 +35,11 @@
 	extrn	_bbOnDebugEnterScope
 	extrn	_bbOnDebugEnterStm
 	extrn	_bbOnDebugLeaveScope
-	public	___bb_roadskies_vpython_maps
+	public	__bb_main
 	public	_bb_map1
 	public	_bb_tstmap
 	section	"code" code
-___bb_roadskies_vpython_maps:
+__bb_main:
 	push	ebp
 	mov	ebp,esp
 	push	ebx

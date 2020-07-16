@@ -1,8 +1,8 @@
 	format	MS COFF
 	extrn	___bb_blitz3dsdk_blitz3dsdk
 	extrn	___bb_blitz_blitz
-	extrn	___bb_road_skys_game_world
-	extrn	___bb_road_skys_yengine
+	extrn	___bb_roadskies_vpython_game_world
+	extrn	___bb_roadskies_vpython_yengine
 	extrn	_bbBeginBlitz3D
 	extrn	_bbGraphics3D
 	extrn	_bbHandleFromObject
@@ -49,8 +49,8 @@ _60:
 	add	esp,8
 	call	___bb_blitz_blitz
 	call	___bb_blitz3dsdk_blitz3dsdk
-	call	___bb_road_skys_yengine
-	call	___bb_road_skys_game_world
+	call	___bb_roadskies_vpython_yengine
+	call	___bb_roadskies_vpython_game_world
 	push	_28
 	call	dword [_bbOnDebugEnterStm]
 	add	esp,4
@@ -221,7 +221,7 @@ _51:
 	dd	-8
 	dd	0
 _29:
-	db	"C:/Users/zayan/OneDrive/Documents/blitzmax3d/road skys/main.bmx",0
+	db	"C:/Users/zayan/OneDrive/Documents/GitHub/Roadskies-VPython/main.bmx",0
 	align	4
 _28:
 	dd	_29

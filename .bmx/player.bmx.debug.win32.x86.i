@@ -6,6 +6,7 @@ player^yentity{
 .cams#&
 .grav#&
 .ograv#&
+.jump_power#&
 -New%()="_bb_player_New"
 -Delete%()="_bb_player_Delete"
 -init%()="_bb_player_init"

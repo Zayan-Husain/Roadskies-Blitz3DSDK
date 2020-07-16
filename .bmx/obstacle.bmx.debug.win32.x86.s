@@ -1,7 +1,7 @@
 	format	MS COFF
 	extrn	___bb_blitz3dsdk_blitz3dsdk
 	extrn	___bb_blitz_blitz
-	extrn	___bb_road_skys_yengine
+	extrn	___bb_roadskies_vpython_yengine
 	extrn	__bb_yentity_Delete
 	extrn	__bb_yentity_New
 	extrn	__bb_yentity_alpha
@@ -33,14 +33,14 @@
 	extrn	_bbStringClass
 	extrn	_bb_yentity
 	extrn	_brl_blitz_NullObjectError
-	public	___bb_road_skys_obstacle
+	public	___bb_roadskies_vpython_obstacle
 	public	__bb_obstacle_Create
 	public	__bb_obstacle_Delete
 	public	__bb_obstacle_New
 	public	__bb_obstacle_init
 	public	_bb_obstacle
 	section	"code" code
-___bb_road_skys_obstacle:
+___bb_roadskies_vpython_obstacle:
 	push	ebp
 	mov	ebp,esp
 	push	ebx
@@ -59,7 +59,7 @@ _51:
 	add	esp,8
 	call	___bb_blitz_blitz
 	call	___bb_blitz3dsdk_blitz3dsdk
-	call	___bb_road_skys_yengine
+	call	___bb_roadskies_vpython_yengine
 	push	_bb_obstacle
 	call	_bbObjectRegisterType
 	add	esp,4
@@ -363,7 +363,7 @@ _62:
 	dd	-4
 	dd	0
 _57:
-	db	"C:/Users/zayan/OneDrive/Documents/blitzmax3d/road skys/obstacle.bmx",0
+	db	"C:/Users/zayan/OneDrive/Documents/GitHub/Roadskies-VPython/obstacle.bmx",0
 	align	4
 _56:
 	dd	_57

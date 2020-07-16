@@ -29,3 +29,5 @@ import pub.freejoy
 import pub.freeprocess
 import pub.glew
 import pub.macos
+tstmap%&[]&[]&=mem:p("bb_tstmap")
+map1%&[]&[]&=mem:p("bb_map1")
