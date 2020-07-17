@@ -4,7 +4,7 @@ Import "yengine.bmx"
 
 Type obstacle Extends yentity
 
-	Field yaction$ = "none"
+	Field yaction$ = ""
 	
 	Method init()
 	

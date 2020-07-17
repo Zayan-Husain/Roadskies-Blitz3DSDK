@@ -2,6 +2,7 @@ import brl.blitz
 import blitz3d.blitz3dsdk
 import "yengine.bmx"
 obstacle^yentity{
+.yaction$&
 -New%()="_bb_obstacle_New"
 -Delete%()="_bb_obstacle_Delete"
 -init%()="_bb_obstacle_init"

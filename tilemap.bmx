@@ -9,7 +9,7 @@ Import "yengine.bmx"
 Type ytilemap Extends yentity
 
 	'mx =margin x
-	Field lmap:TList, mx = -15, mz = 6, sx = 1, sz = 1
+	Field lmap:TList, mx = -13, mz = 6, sx = 1, sz = 1
 	
 	Method make_tile( id:String, j, i )
 		
@@ -43,11 +43,18 @@ Type ytilemap Extends yentity
 			c =  bbCreateCube()
 			bbEntityColor c, 255, 150, 0
 			o:obstacle =  obstacle.Create( j, -5, i, c, 0 )
+			o.yaction = "win"
 			world.add( o )
 		EndIf
 	
 	End Method'end make_tile
-	
+
+	Method removeLevel()
+		result:TList = get_by_type("obstacle")
+		For i:yentity=EachIn result
+			world.remove(i)
+		Next
+	EndMethod
 		
 	Method make_tilemap()
 		

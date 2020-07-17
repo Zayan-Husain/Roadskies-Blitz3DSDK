@@ -4,7 +4,7 @@ Import "player.bmx"
 Import "obstacle.bmx"
 Import "tilemap.bmx"
 Import "yengine.bmx"
-Import "maps.bmx"
+
 
 '////////////////game_world/////////////////////
 
@@ -42,7 +42,7 @@ Type game_world Extends yworld
 		
 		
 		c =  bbCreateCube()
-		add( player.Create( 0, -5, 7, c, 0.2 ) )
+		add( player.Create( -3, -5, 7, c, 0.2 ) )
 		
 		Rem c2 =  bbCreateCube()
 		add( obstacle.Create( 0, -5, 18, c2, 0 ) )
@@ -63,5 +63,6 @@ Type game_world Extends yworld
 	EndFunction
 
 EndType
+
 
 '////////////////end game_world/////////////////////

@@ -44,17 +44,17 @@ ___bb_roadskies_vpython_obstacle:
 	push	ebp
 	mov	ebp,esp
 	push	ebx
-	cmp	dword [_50],0
-	je	_51
+	cmp	dword [_53],0
+	je	_54
 	mov	eax,0
 	pop	ebx
 	mov	esp,ebp
 	pop	ebp
 	ret
-_51:
-	mov	dword [_50],1
+_54:
+	mov	dword [_53],1
 	push	ebp
-	push	_49
+	push	_52
 	call	dword [_bbOnDebugEnterScope]
 	add	esp,8
 	call	___bb_blitz_blitz
@@ -64,8 +64,8 @@ _51:
 	call	_bbObjectRegisterType
 	add	esp,4
 	mov	ebx,0
-	jmp	_31
-_31:
+	jmp	_34
+_34:
 	call	dword [_bbOnDebugLeaveScope]
 	mov	eax,ebx
 	pop	ebx
@@ -80,7 +80,7 @@ __bb_obstacle_New:
 	mov	eax,dword [ebp+8]
 	mov	dword [ebp-4],eax
 	push	ebp
-	push	_52
+	push	_56
 	call	dword [_bbOnDebugEnterScope]
 	add	esp,8
 	push	dword [ebp-4]
@@ -88,9 +88,13 @@ __bb_obstacle_New:
 	add	esp,4
 	mov	eax,dword [ebp-4]
 	mov	dword [eax],_bb_obstacle
+	mov	edx,_22
+	inc	dword [edx+4]
+	mov	eax,dword [ebp-4]
+	mov	dword [eax+40],edx
 	mov	ebx,0
-	jmp	_34
-_34:
+	jmp	_37
+_37:
 	call	dword [_bbOnDebugLeaveScope]
 	mov	eax,ebx
 	pop	ebx
@@ -100,15 +104,24 @@ _34:
 __bb_obstacle_Delete:
 	push	ebp
 	mov	ebp,esp
-	mov	eax,dword [ebp+8]
-_37:
-	mov	dword [eax],_bb_yentity
+	push	ebx
+	mov	ebx,dword [ebp+8]
+_40:
+	mov	eax,dword [ebx+40]
+	dec	dword [eax+4]
+	jnz	_61
 	push	eax
+	call	_bbGCFree
+	add	esp,4
+_61:
+	mov	dword [ebx],_bb_yentity
+	push	ebx
 	call	__bb_yentity_Delete
 	add	esp,4
 	mov	eax,0
-	jmp	_55
-_55:
+	jmp	_59
+_59:
+	pop	ebx
 	mov	esp,ebp
 	pop	ebp
 	ret
@@ -120,29 +133,29 @@ __bb_obstacle_init:
 	mov	eax,dword [ebp+8]
 	mov	dword [ebp-4],eax
 	push	ebp
-	push	_62
+	push	_68
 	call	dword [_bbOnDebugEnterScope]
 	add	esp,8
-	push	_56
+	push	_62
 	call	dword [_bbOnDebugEnterStm]
 	add	esp,4
 	push	dword [ebp-4]
 	call	__bb_yentity_init
 	add	esp,4
-	push	_58
+	push	_64
 	call	dword [_bbOnDebugEnterStm]
 	add	esp,4
 	mov	ebx,dword [ebp-4]
 	cmp	ebx,_bbNullObject
-	jne	_60
+	jne	_66
 	call	_brl_blitz_NullObjectError
-_60:
+_66:
 	push	0
 	push	1
 	push	dword [ebx+24]
 	call	_bbEntityType
 	add	esp,12
-	push	_61
+	push	_67
 	call	dword [_bbOnDebugEnterStm]
 	add	esp,4
 	push	2
@@ -152,8 +165,8 @@ _60:
 	call	_bbCollisions
 	add	esp,16
 	mov	ebx,0
-	jmp	_40
-_40:
+	jmp	_43
+_43:
 	call	dword [_bbOnDebugLeaveScope]
 	mov	eax,ebx
 	pop	ebx
@@ -178,90 +191,90 @@ __bb_obstacle_Create:
 	fstp	dword [ebp-20]
 	mov	dword [ebp-24],_bbNullObject
 	push	ebp
-	push	_94
+	push	_100
 	call	dword [_bbOnDebugEnterScope]
 	add	esp,8
-	push	_63
+	push	_69
 	call	dword [_bbOnDebugEnterStm]
 	add	esp,4
 	push	_bb_obstacle
 	call	_bbObjectNew
 	add	esp,4
 	mov	dword [ebp-24],eax
-	push	_65
+	push	_71
 	call	dword [_bbOnDebugEnterStm]
 	add	esp,4
 	mov	ebx,dword [ebp-24]
 	cmp	ebx,_bbNullObject
-	jne	_67
+	jne	_73
 	call	_brl_blitz_NullObjectError
-_67:
+_73:
 	fld	dword [ebp-4]
 	fstp	dword [ebx+8]
-	push	_69
+	push	_75
 	call	dword [_bbOnDebugEnterStm]
 	add	esp,4
 	mov	ebx,dword [ebp-24]
 	cmp	ebx,_bbNullObject
-	jne	_71
+	jne	_77
 	call	_brl_blitz_NullObjectError
-_71:
+_77:
 	fld	dword [ebp-8]
 	fstp	dword [ebx+12]
-	push	_73
+	push	_79
 	call	dword [_bbOnDebugEnterStm]
 	add	esp,4
 	mov	ebx,dword [ebp-24]
 	cmp	ebx,_bbNullObject
-	jne	_75
+	jne	_81
 	call	_brl_blitz_NullObjectError
-_75:
+_81:
 	fld	dword [ebp-12]
 	fstp	dword [ebx+16]
-	push	_77
+	push	_83
 	call	dword [_bbOnDebugEnterStm]
 	add	esp,4
 	mov	ebx,dword [ebp-24]
 	cmp	ebx,_bbNullObject
-	jne	_79
+	jne	_85
 	call	_brl_blitz_NullObjectError
-_79:
+_85:
 	fld	dword [ebp-20]
 	fstp	dword [ebx+20]
-	push	_81
+	push	_87
 	call	dword [_bbOnDebugEnterStm]
 	add	esp,4
 	mov	ebx,dword [ebp-24]
 	cmp	ebx,_bbNullObject
-	jne	_83
+	jne	_89
 	call	_brl_blitz_NullObjectError
-_83:
+_89:
 	mov	eax,dword [ebp-16]
 	mov	dword [ebx+24],eax
-	push	_85
+	push	_91
 	call	dword [_bbOnDebugEnterStm]
 	add	esp,4
 	mov	esi,dword [ebp-24]
 	cmp	esi,_bbNullObject
-	jne	_87
+	jne	_93
 	call	_brl_blitz_NullObjectError
-_87:
-	mov	ebx,_22
+_93:
+	mov	ebx,_23
 	inc	dword [ebx+4]
 	mov	eax,dword [esi+28]
 	dec	dword [eax+4]
-	jnz	_92
+	jnz	_98
 	push	eax
 	call	_bbGCFree
 	add	esp,4
-_92:
+_98:
 	mov	dword [esi+28],ebx
-	push	_93
+	push	_99
 	call	dword [_bbOnDebugEnterStm]
 	add	esp,4
 	mov	ebx,dword [ebp-24]
-	jmp	_47
-_47:
+	jmp	_50
+_50:
 	call	dword [_bbOnDebugLeaveScope]
 	mov	eax,ebx
 	pop	esi
@@ -271,54 +284,62 @@ _47:
 	ret
 	section	"data" data writeable align 8
 	align	4
-_50:
-	dd	0
-_24:
-	db	"obstacle",0
-	align	4
-_49:
-	dd	1
-	dd	_24
+_53:
 	dd	0
 _25:
-	db	"New",0
+	db	"obstacle",0
+	align	4
+_52:
+	dd	1
+	dd	_25
+	dd	0
 _26:
-	db	"()i",0
+	db	"yaction",0
 _27:
-	db	"Delete",0
+	db	"$",0
 _28:
-	db	"init",0
+	db	"New",0
 _29:
-	db	"Create",0
+	db	"()i",0
 _30:
+	db	"Delete",0
+_31:
+	db	"init",0
+_32:
+	db	"Create",0
+_33:
 	db	"(f,f,f,i,f):obstacle",0
 	align	4
-_23:
+_24:
 	dd	2
-	dd	_24
-	dd	6
 	dd	_25
+	dd	3
 	dd	_26
-	dd	16
-	dd	6
 	dd	_27
-	dd	_26
-	dd	20
+	dd	40
 	dd	6
 	dd	_28
-	dd	_26
+	dd	_29
+	dd	16
+	dd	6
+	dd	_30
+	dd	_29
+	dd	20
+	dd	6
+	dd	_31
+	dd	_29
 	dd	48
 	dd	7
-	dd	_29
-	dd	_30
+	dd	_32
+	dd	_33
 	dd	96
 	dd	0
 	align	4
 _bb_obstacle:
 	dd	_bb_yentity
 	dd	_bbObjectFree
-	dd	_23
-	dd	40
+	dd	_24
+	dd	44
 	dd	__bb_obstacle_New
 	dd	__bb_obstacle_Delete
 	dd	_bbObjectToString
@@ -340,133 +361,139 @@ _bb_obstacle:
 	dd	__bb_yentity_kd
 	dd	__bb_yentity_sy
 	dd	__bb_obstacle_Create
-_53:
+_57:
 	db	"Self",0
-_54:
+_58:
 	db	":obstacle",0
 	align	4
-_52:
-	dd	1
-	dd	_25
-	dd	2
-	dd	_53
-	dd	_54
-	dd	-4
-	dd	0
-	align	4
-_62:
+_56:
 	dd	1
 	dd	_28
 	dd	2
-	dd	_53
-	dd	_54
+	dd	_57
+	dd	_58
 	dd	-4
 	dd	0
-_57:
+	align	4
+_22:
+	dd	_bbStringClass
+	dd	2147483647
+	dd	4
+	dw	110,111,110,101
+	align	4
+_68:
+	dd	1
+	dd	_31
+	dd	2
+	dd	_57
+	dd	_58
+	dd	-4
+	dd	0
+_63:
 	db	"C:/Users/zayan/OneDrive/Documents/GitHub/Roadskies-VPython/obstacle.bmx",0
 	align	4
-_56:
-	dd	_57
+_62:
+	dd	_63
 	dd	11
 	dd	3
 	align	4
-_58:
-	dd	_57
+_64:
+	dd	_63
 	dd	12
 	dd	3
 	align	4
-_61:
-	dd	_57
+_67:
+	dd	_63
 	dd	14
 	dd	3
-_95:
-	db	"x",0
-_96:
-	db	"f",0
-_97:
-	db	"y",0
-_98:
-	db	"z",0
-_99:
-	db	"grafic",0
-_100:
-	db	"i",0
 _101:
-	db	"speed",0
+	db	"x",0
 _102:
+	db	"f",0
+_103:
+	db	"y",0
+_104:
+	db	"z",0
+_105:
+	db	"grafic",0
+_106:
+	db	"i",0
+_107:
+	db	"speed",0
+_108:
 	db	"e",0
 	align	4
-_94:
+_100:
 	dd	1
-	dd	_29
-	dd	2
-	dd	_95
-	dd	_96
-	dd	-4
-	dd	2
-	dd	_97
-	dd	_96
-	dd	-8
-	dd	2
-	dd	_98
-	dd	_96
-	dd	-12
-	dd	2
-	dd	_99
-	dd	_100
-	dd	-16
+	dd	_32
 	dd	2
 	dd	_101
-	dd	_96
+	dd	_102
+	dd	-4
+	dd	2
+	dd	_103
+	dd	_102
+	dd	-8
+	dd	2
+	dd	_104
+	dd	_102
+	dd	-12
+	dd	2
+	dd	_105
+	dd	_106
+	dd	-16
+	dd	2
+	dd	_107
+	dd	_102
 	dd	-20
 	dd	2
-	dd	_102
-	dd	_54
+	dd	_108
+	dd	_58
 	dd	-24
 	dd	0
 	align	4
-_63:
-	dd	_57
+_69:
+	dd	_63
 	dd	23
 	dd	3
 	align	4
-_65:
-	dd	_57
+_71:
+	dd	_63
 	dd	25
 	dd	3
 	align	4
-_69:
-	dd	_57
+_75:
+	dd	_63
 	dd	26
 	dd	3
 	align	4
-_73:
-	dd	_57
+_79:
+	dd	_63
 	dd	27
 	dd	3
 	align	4
-_77:
-	dd	_57
+_83:
+	dd	_63
 	dd	28
 	dd	3
 	align	4
-_81:
-	dd	_57
+_87:
+	dd	_63
 	dd	29
 	dd	3
 	align	4
-_85:
-	dd	_57
+_91:
+	dd	_63
 	dd	30
 	dd	3
 	align	4
-_22:
+_23:
 	dd	_bbStringClass
 	dd	2147483647
 	dd	8
 	dw	111,98,115,116,97,99,108,101
 	align	4
-_93:
-	dd	_57
+_99:
+	dd	_63
 	dd	33
 	dd	3

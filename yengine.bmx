@@ -1,5 +1,3 @@
-	
-
 Import blitz3d.blitz3dsdk
 
 
@@ -28,7 +26,10 @@ Type yengine
 			update()
 	
 			bbRenderWorld
+			twodupdate()
 			bbFlip 1
+			
+			
 		Wend
 		
 	End Method 'end init
@@ -37,6 +38,14 @@ Type yengine
 	
 		If current_world Then
 			current_world.update()
+		EndIf
+		
+	End Method
+	
+	Method twodupdate()
+	
+		If current_world Then
+			current_world.twodupdate()
 		EndIf
 		
 	End Method
@@ -50,13 +59,13 @@ Type yengine
 	Method add_world(w:yworld,name$)
 	
 
+		'Print name
 		
 		w.name = name
 		
 		w.ye = Self
-		
+
 		worlds.AddFirst w 
-		
 		
 		
 	End Method 'add_world
@@ -64,19 +73,27 @@ Type yengine
 	Method change_world(name$,init=0)
 	
 		w:yworld = Null;
-		
+		'Print "change world to "+name
+		'find world
 		For wt:yworld=EachIn worlds
+			'Print  wt.name+" = "+name
 			If wt.name = name Then
+			
 				w = wt
 			EndIf
 		Next
+		'if not found exit
 	   If w = Null Then Return
 		
 		If init = 1 And w <> Null Then
-			w.init
+			w.init()
 		EndIf
-		
+
+		If current_world Then current_world.hide_all()	
+
 		current_world = w
+
+		current_world.show_all()
 	
 	End Method 'change_world
 	
@@ -106,6 +123,11 @@ Type yworld
 		Next
 	End Method
 	
+	Method twodupdate()
+		
+
+	End Method
+	
 	Method render()
 	
 		For e:yentity=EachIn mcs
@@ -132,6 +154,24 @@ Type yworld
 			remove(e)
 		Next
 	End Method
+	
+	Method hide_all()
+		
+		For e:yentity=EachIn mcs
+			If e.grafic Then
+				bbHideEntity(e.grafic)
+			EndIf
+		Next
+	End Method
+	
+	Method show_all()
+
+		For e:yentity=EachIn mcs
+			If e.grafic Then
+				bbShowEntity(e.grafic)
+			EndIf
+		Next
+	End Method
 		
 	Function Create:yworld()
 	
@@ -145,7 +185,7 @@ Type yworld
 	
 End Type
 
-
+'test world
 Type tstw Extends yworld
 
 	Method update()
@@ -177,7 +217,7 @@ End Type
 
 Type yentity
 	
-	Field x#,y#,z#,speed#,grafic%,ytype$="entity",world:yworld,collide_c# = 2
+	Field x#,y#,z#,speed#,grafic,ytype$="entity",world:yworld,collide_c# = 2
 	
 	Method init()
 		Print "init entity"
@@ -325,9 +365,9 @@ Type ytimer
 	End Method
 	
 	
-	Function Create:ytimer(max_count2=20)
+	Function Create:ytimer(max_count2=1)
 		t:ytimer= New ytimer
-		
+		max_count2 = max_count2 * 20
 		t.count =0
 		t.max_count = max_count2
 		t.yfinished=0

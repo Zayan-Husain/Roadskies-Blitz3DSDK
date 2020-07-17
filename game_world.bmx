@@ -9,20 +9,22 @@ Import "yengine.bmx"
 '////////////////game_world/////////////////////
 
 Type game_world Extends yworld
-
+	
+Field cl = 1, tm:ytilemap
+		
 	Method update()
 		
 		Super.update()
 		
 	EndMethod
-	
+		
 	Method init()
 		
 		Super.init()
 		scaler = 2
 		skybox = bbCreateSphere( 12 )
 		clouds = bbLoadTexture( "gfx/realsky.bmp" )
-		bbScaleEntity skybox, 100 , 100, 100
+		bbScaleEntity skybox, 100, 100, 100
 		bbEntityTexture skybox, clouds
 		'bbScaleTexture clouds, 0.25, 0.25
 		bbEntityOrder skybox, 1
@@ -34,10 +36,12 @@ Type game_world Extends yworld
 
 
 
-	tm:ytilemap = ytilemap.Create()
+	tm = ytilemap.Create()
 		add( tm )
-		tm.load_map("maps/map1.txt")
+		tm.load_map( "maps/map" + cl + ".txt" )
 		tm.make_tilemap()
+		'tm.removeLevel()
+		'nextLevel()
 		
 		
 		
@@ -52,7 +56,13 @@ Type game_world Extends yworld
 
 	
 	EndMethod
-	
+	Method nextLevel()
+		tm.removeLevel()
+		cl = cl + 1
+		tm.load_map( "maps/map" + cl + ".txt" )
+		tm.make_tilemap()
+		
+	EndMethod
 	Function Create:game_world()
 		
 		tst:game_world =  New game_world
@@ -63,5 +73,6 @@ Type game_world Extends yworld
 	EndFunction
 
 EndType
+
 
 '////////////////end game_world/////////////////////

@@ -1,20 +1,22 @@
 Import blitz3d.blitz3dsdk
 
 Import "yengine.bmx"
+Import "obstacle.bmx"
 '////////////////player////////////////////
 
 Type player Extends yentity
 
 	'cams = cam speed, grav = gravity
 	Field jumping = False, cams:Float = 0.08, grav:Float = -0.5, ograv:Float = -0.5, jump_power:Float = 20
-	
-		
+	Field canJump = True, powerupTimer:ytimer
+
 	Method init()
 	
 		Super.init()
 		bbEntityType grafic, 2
 		'src_type,dest_type,detectionmethod,response
 		bbCollisions 2, 1, 2, 2
+		powerupTimer = ytimer.Create( 5 )
 	
 	End Method'end update
 	
@@ -24,6 +26,7 @@ Type player Extends yentity
 		
 		move()
 		hit()
+		powerUp( "nogravity" );
 	
 	End Method'end update
 	
@@ -48,7 +51,7 @@ Type player Extends yentity
 		If kd( 205 ) Then move_by( speed, 0, 0 )
 		
 		'jump
-		If kd( 57 ) And Not jumping Then
+		If kd( 57 ) And Not jumping And canJump Then
 			 move_by( 0, jump_power )	
 			 jumping = True
 			grav = ograv
@@ -70,7 +73,11 @@ Type player Extends yentity
 
 	Method hit()
 	
+		'collide obstacle cast yentity to obstacle
+		o:obstacle = obstacle( collide( "obstacle" ) )
+		
 		top:yentity = collide( "obstacle", 0, 1 )
+		
 		front = collide( "obstacle", 0, -1, -1 )
 		If top Then 
 			'move_by(0,2.5,0)
@@ -79,12 +86,38 @@ Type player Extends yentity
 			'grav = 0
 		Else
 			
+			
 		EndIf
 		
 		'If front Then Print "hit"
-		
+		Local id:TTypeId = TTypeId.ForObject( o )
+		'Print id.Name()
+		If o  And o.yaction Then
+			
+			If o.yaction = "win" Then
+				Print  o.yaction
+				' gw:game_world = game_world( world )
+				' world.ye.change_world("win_world")
+				' gw.nextLevel();
+				
+			EndIf
+		EndIf
 	
 	End Method'end collide
+	
+	Method powerUp( powerup:String )
+		
+		If powerup = "nogravity" Then
+			canJump = False
+			grav = 0
+			power_up = True
+			If powerupTimer.finished() And power_up Then
+				power_up = False
+				grav = ograv
+				canJump = True
+			EndIf
+		EndIf
+	EndMethod
 	
 	Function Create:player( x:Float, y:Float, z:Float, grafic:Int, speed:Float )
 		

@@ -1,0 +1,37 @@
+Import blitz3d.blitz3dsdk
+
+Import "yengine.bmx"
+
+
+'////////////////win_world/////////////////////
+
+Type win_world Extends yworld	
+
+	Method init()
+		
+		Super.init()
+		
+		
+		
+	EndMethod
+	
+	Method twodupdate()
+		
+		Super.update()
+		bbText 20,20,"you win"
+		
+	EndMethod
+
+	Function Create:win_world()
+		
+		tst:win_world =  New win_world
+
+		
+		Return tst
+	
+	EndFunction
+
+EndType
+
+
+'////////////////end win_world/////////////////////

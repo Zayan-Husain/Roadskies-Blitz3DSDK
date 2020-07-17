@@ -31,6 +31,6 @@ ye.add_world(winw ,"win_world")
 
 ye.change_world("game_world")
 
-
+tst.ye = ye
 
 ye.init()

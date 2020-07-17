@@ -1,17 +1,18 @@
 	format	MS COFF
 	extrn	___bb_blitz3dsdk_blitz3dsdk
 	extrn	___bb_blitz_blitz
-	extrn	___bb_roadskies_vpython_maps
-	extrn	___bb_roadskies_vpython_obstacle
 	extrn	___bb_roadskies_vpython_player
 	extrn	___bb_roadskies_vpython_tilemap
 	extrn	__bb_yworld_Delete
 	extrn	__bb_yworld_New
 	extrn	__bb_yworld_add
+	extrn	__bb_yworld_hide_all
 	extrn	__bb_yworld_init
 	extrn	__bb_yworld_remove
 	extrn	__bb_yworld_remove_all
 	extrn	__bb_yworld_render
+	extrn	__bb_yworld_show_all
+	extrn	__bb_yworld_twodupdate
 	extrn	__bb_yworld_update
 	extrn	_bbCreateCube
 	extrn	_bbCreateSphere
@@ -19,6 +20,7 @@
 	extrn	_bbEntityFX
 	extrn	_bbEntityOrder
 	extrn	_bbEntityTexture
+	extrn	_bbFlipMesh
 	extrn	_bbGCFree
 	extrn	_bbHandleFromObject
 	extrn	_bbHandleToObject
@@ -36,11 +38,10 @@
 	extrn	_bbOnDebugEnterScope
 	extrn	_bbOnDebugEnterStm
 	extrn	_bbOnDebugLeaveScope
+	extrn	_bbScaleEntity
 	extrn	_bbStringClass
 	extrn	_bbStringToCString
-	extrn	_bb_map1
 	extrn	_bb_player
-	extrn	_bb_tstmap
 	extrn	_bb_yentity
 	extrn	_bb_ytilemap
 	extrn	_bb_yworld
@@ -67,21 +68,19 @@ __bb_main:
 _53:
 	mov	dword [_52],1
 	push	ebp
-	push	_48
+	push	_51
 	call	dword [_bbOnDebugEnterScope]
 	add	esp,8
 	call	___bb_blitz_blitz
 	call	___bb_blitz3dsdk_blitz3dsdk
 	call	___bb_roadskies_vpython_player
-	call	___bb_roadskies_vpython_obstacle
 	call	___bb_roadskies_vpython_tilemap
-	call	___bb_roadskies_vpython_maps
 	push	_bb_game_world
 	call	_bbObjectRegisterType
 	add	esp,4
 	mov	ebx,0
-	jmp	_32
-_32:
+	jmp	_35
+_35:
 	call	dword [_bbOnDebugLeaveScope]
 	mov	eax,ebx
 	pop	ebx
@@ -96,7 +95,7 @@ __bb_game_world_New:
 	mov	eax,dword [ebp+8]
 	mov	dword [ebp-4],eax
 	push	ebp
-	push	_54
+	push	_55
 	call	dword [_bbOnDebugEnterScope]
 	add	esp,8
 	push	dword [ebp-4]
@@ -104,9 +103,13 @@ __bb_game_world_New:
 	add	esp,4
 	mov	eax,dword [ebp-4]
 	mov	dword [eax],_bb_game_world
+	mov	edx,_bbNullObject
+	inc	dword [edx+4]
+	mov	eax,dword [ebp-4]
+	mov	dword [eax+20],edx
 	mov	ebx,0
-	jmp	_35
-_35:
+	jmp	_38
+_38:
 	call	dword [_bbOnDebugLeaveScope]
 	mov	eax,ebx
 	pop	ebx
@@ -116,15 +119,24 @@ _35:
 __bb_game_world_Delete:
 	push	ebp
 	mov	ebp,esp
-	mov	eax,dword [ebp+8]
-_38:
-	mov	dword [eax],_bb_yworld
+	push	ebx
+	mov	ebx,dword [ebp+8]
+_41:
+	mov	eax,dword [ebx+20]
+	dec	dword [eax+4]
+	jnz	_60
 	push	eax
+	call	_bbGCFree
+	add	esp,4
+_60:
+	mov	dword [ebx],_bb_yworld
+	push	ebx
 	call	__bb_yworld_Delete
 	add	esp,4
 	mov	eax,0
-	jmp	_57
-_57:
+	jmp	_58
+_58:
+	pop	ebx
 	mov	esp,ebp
 	pop	ebp
 	ret
@@ -136,18 +148,18 @@ __bb_game_world_update:
 	mov	eax,dword [ebp+8]
 	mov	dword [ebp-4],eax
 	push	ebp
-	push	_60
+	push	_63
 	call	dword [_bbOnDebugEnterScope]
 	add	esp,8
-	push	_58
+	push	_61
 	call	dword [_bbOnDebugEnterStm]
 	add	esp,4
 	push	dword [ebp-4]
 	call	__bb_yworld_update
 	add	esp,4
 	mov	ebx,0
-	jmp	_41
-_41:
+	jmp	_44
+_44:
 	call	dword [_bbOnDebugLeaveScope]
 	mov	eax,ebx
 	pop	ebx
@@ -168,22 +180,21 @@ __bb_game_world_init:
 	mov	dword [ebp-20],0
 	mov	dword [ebp-24],_bbNullObject
 	mov	dword [ebp-28],0
-	mov	eax,ebp
-	push	eax
+	push	ebp
 	push	_100
 	call	dword [_bbOnDebugEnterScope]
 	add	esp,8
-	push	_61
+	push	_64
 	call	dword [_bbOnDebugEnterStm]
 	add	esp,4
 	push	dword [ebp-4]
 	call	__bb_yworld_init
 	add	esp,4
-	push	_62
+	push	_65
 	call	dword [_bbOnDebugEnterStm]
 	add	esp,4
 	mov	dword [ebp-8],2
-	push	_64
+	push	_67
 	call	dword [_bbOnDebugEnterStm]
 	add	esp,4
 	push	0
@@ -191,23 +202,33 @@ __bb_game_world_init:
 	call	_bbCreateSphere
 	add	esp,8
 	mov	dword [ebp-12],eax
-	push	_66
+	push	_69
 	call	dword [_bbOnDebugEnterStm]
 	add	esp,4
 	push	_22
 	call	_bbStringToCString
 	add	esp,4
-	mov	esi,eax
+	mov	ebx,eax
 	push	1
-	push	esi
+	push	ebx
 	call	_bbLoadTexture
 	add	esp,8
-	mov	ebx,eax
-	push	esi
+	mov	esi,eax
+	push	ebx
 	call	_bbMemFree
 	add	esp,4
-	mov	dword [ebp-16],ebx
-	push	_70
+	mov	dword [ebp-16],esi
+	push	_73
+	call	dword [_bbOnDebugEnterStm]
+	add	esp,4
+	push	0
+	push	1120403456
+	push	1120403456
+	push	1120403456
+	push	dword [ebp-12]
+	call	_bbScaleEntity
+	add	esp,20
+	push	_74
 	call	dword [_bbOnDebugEnterStm]
 	add	esp,4
 	push	0
@@ -216,28 +237,34 @@ __bb_game_world_init:
 	push	dword [ebp-12]
 	call	_bbEntityTexture
 	add	esp,16
-	push	_71
+	push	_75
 	call	dword [_bbOnDebugEnterStm]
 	add	esp,4
 	push	1
 	push	dword [ebp-12]
 	call	_bbEntityOrder
 	add	esp,8
-	push	_72
+	push	_76
+	call	dword [_bbOnDebugEnterStm]
+	add	esp,4
+	push	dword [ebp-12]
+	call	_bbFlipMesh
+	add	esp,4
+	push	_77
 	call	dword [_bbOnDebugEnterStm]
 	add	esp,4
 	push	1048576000
 	push	dword [ebp-12]
 	call	_bbEntityAlpha
 	add	esp,8
-	push	_73
+	push	_78
 	call	dword [_bbOnDebugEnterStm]
 	add	esp,4
 	push	8
 	push	dword [ebp-12]
 	call	_bbEntityFX
 	add	esp,8
-	push	_74
+	push	_79
 	call	dword [_bbOnDebugEnterStm]
 	add	esp,4
 	push	0
@@ -251,14 +278,14 @@ __bb_game_world_init:
 	call	_bbHandleFromObject
 	add	esp,4
 	mov	dword [ebp-20],eax
-	push	_76
+	push	_81
 	call	dword [_bbOnDebugEnterStm]
 	add	esp,4
 	mov	ebx,dword [ebp-4]
 	cmp	ebx,_bbNullObject
-	jne	_78
+	jne	_83
 	call	_brl_blitz_NullObjectError
-_78:
+_83:
 	push	_bb_yentity
 	push	dword [ebp-20]
 	call	_bbHandleToObject
@@ -269,9 +296,9 @@ _78:
 	push	eax
 	push	ebx
 	mov	eax,dword [ebx]
-	call	dword [eax+60]
+	call	dword [eax+64]
 	add	esp,8
-	push	_79
+	push	_84
 	call	dword [_bbOnDebugEnterStm]
 	add	esp,4
 	push	0
@@ -282,37 +309,32 @@ _78:
 	call	dword [_bb_ytilemap+96]
 	add	esp,20
 	mov	dword [ebp-24],eax
-	push	_81
+	push	_86
 	call	dword [_bbOnDebugEnterStm]
 	add	esp,4
 	mov	ebx,dword [ebp-4]
 	cmp	ebx,_bbNullObject
-	jne	_83
+	jne	_88
 	call	_brl_blitz_NullObjectError
-_83:
+_88:
 	push	dword [ebp-24]
 	push	ebx
 	mov	eax,dword [ebx]
-	call	dword [eax+60]
+	call	dword [eax+64]
 	add	esp,8
-	push	_84
+	push	_89
 	call	dword [_bbOnDebugEnterStm]
 	add	esp,4
-	mov	esi,dword [ebp-24]
-	cmp	esi,_bbNullObject
-	jne	_86
+	mov	ebx,dword [ebp-24]
+	cmp	ebx,_bbNullObject
+	jne	_91
 	call	_brl_blitz_NullObjectError
-_86:
-	mov	ebx,dword [_bb_map1]
-	inc	dword [ebx+4]
-	mov	eax,dword [esi+40]
-	dec	dword [eax+4]
-	jnz	_91
-	push	eax
-	call	_bbGCFree
-	add	esp,4
 _91:
-	mov	dword [esi+40],ebx
+	push	_23
+	push	ebx
+	mov	eax,dword [ebx]
+	call	dword [eax+108]
+	add	esp,8
 	push	_92
 	call	dword [_bbOnDebugEnterStm]
 	add	esp,4
@@ -344,17 +366,17 @@ _99:
 	push	dword [ebp-28]
 	push	1088421888
 	push	-1063256064
-	push	0
+	push	-1069547520
 	call	dword [_bb_player+96]
 	add	esp,20
 	push	eax
 	push	ebx
 	mov	eax,dword [ebx]
-	call	dword [eax+60]
+	call	dword [eax+64]
 	add	esp,8
 	mov	ebx,0
-	jmp	_44
-_44:
+	jmp	_47
+_47:
 	call	dword [_bbOnDebugLeaveScope]
 	mov	eax,ebx
 	pop	esi
@@ -383,8 +405,8 @@ __bb_game_world_Create:
 	call	dword [_bbOnDebugEnterStm]
 	add	esp,4
 	mov	ebx,dword [ebp-4]
-	jmp	_46
-_46:
+	jmp	_49
+_49:
 	call	dword [_bbOnDebugLeaveScope]
 	mov	eax,ebx
 	pop	ebx
@@ -395,72 +417,66 @@ _46:
 	align	4
 _52:
 	dd	0
-_24:
-	db	"game_world",0
-_49:
-	db	"tstmap",0
-_50:
-	db	"[][]i",0
-_51:
-	db	"map1",0
-	align	4
-_48:
-	dd	1
-	dd	_24
-	dd	4
-	dd	_49
-	dd	_50
-	dd	_bb_tstmap
-	dd	4
-	dd	_51
-	dd	_50
-	dd	_bb_map1
-	dd	0
 _25:
-	db	"New",0
+	db	"game_world",0
+	align	4
+_51:
+	dd	1
+	dd	_25
+	dd	0
 _26:
-	db	"()i",0
+	db	"ye",0
 _27:
-	db	"Delete",0
+	db	":yengine",0
 _28:
-	db	"update",0
+	db	"New",0
 _29:
-	db	"init",0
+	db	"()i",0
 _30:
-	db	"Create",0
+	db	"Delete",0
 _31:
+	db	"update",0
+_32:
+	db	"init",0
+_33:
+	db	"Create",0
+_34:
 	db	"():game_world",0
 	align	4
-_23:
+_24:
 	dd	2
-	dd	_24
-	dd	6
 	dd	_25
+	dd	3
 	dd	_26
-	dd	16
-	dd	6
 	dd	_27
-	dd	_26
 	dd	20
 	dd	6
 	dd	_28
-	dd	_26
+	dd	_29
+	dd	16
+	dd	6
+	dd	_30
+	dd	_29
+	dd	20
+	dd	6
+	dd	_31
+	dd	_29
 	dd	52
 	dd	6
+	dd	_32
 	dd	_29
-	dd	_26
 	dd	48
 	dd	7
-	dd	_30
-	dd	_31
-	dd	72
+	dd	_33
+	dd	_34
+	dd	84
 	dd	0
 	align	4
 _bb_game_world:
 	dd	_bb_yworld
 	dd	_bbObjectFree
-	dd	_23
-	dd	20
+	dd	_24
+	dd	24
 	dd	__bb_game_world_New
 	dd	__bb_game_world_Delete
 	dd	_bbObjectToString
@@ -471,38 +487,41 @@ _bb_game_world:
 	dd	_bbObjectReserved
 	dd	__bb_game_world_init
 	dd	__bb_game_world_update
+	dd	__bb_yworld_twodupdate
 	dd	__bb_yworld_render
 	dd	__bb_yworld_add
 	dd	__bb_yworld_remove
 	dd	__bb_yworld_remove_all
+	dd	__bb_yworld_hide_all
+	dd	__bb_yworld_show_all
 	dd	__bb_game_world_Create
-_55:
-	db	"Self",0
 _56:
+	db	"Self",0
+_57:
 	db	":game_world",0
 	align	4
-_54:
-	dd	1
-	dd	_25
-	dd	2
-	dd	_55
-	dd	_56
-	dd	-4
-	dd	0
-	align	4
-_60:
+_55:
 	dd	1
 	dd	_28
 	dd	2
-	dd	_55
 	dd	_56
+	dd	_57
 	dd	-4
 	dd	0
-_59:
+	align	4
+_63:
+	dd	1
+	dd	_31
+	dd	2
+	dd	_56
+	dd	_57
+	dd	-4
+	dd	0
+_62:
 	db	"$BMXPATH/yoel/yengineb3d/road skys/Roadskies-VPython/game_world.bmx",0
 	align	4
-_58:
-	dd	_59
+_61:
+	dd	_62
 	dd	15
 	dd	3
 _101:
@@ -524,10 +543,10 @@ _108:
 	align	4
 _100:
 	dd	1
-	dd	_29
+	dd	_32
 	dd	2
-	dd	_55
 	dd	_56
+	dd	_57
 	dd	-4
 	dd	2
 	dd	_101
@@ -555,23 +574,23 @@ _100:
 	dd	-28
 	dd	0
 	align	4
-_61:
-	dd	_59
+_64:
+	dd	_62
 	dd	21
 	dd	3
 	align	4
-_62:
-	dd	_59
+_65:
+	dd	_62
 	dd	22
 	dd	3
 	align	4
-_64:
-	dd	_59
+_67:
+	dd	_62
 	dd	23
 	dd	3
 	align	4
-_66:
-	dd	_59
+_69:
+	dd	_62
 	dd	24
 	dd	3
 	align	4
@@ -581,63 +600,79 @@ _22:
 	dd	15
 	dw	103,102,120,47,114,101,97,108,115,107,121,46,98,109,112
 	align	4
-_70:
-	dd	_59
-	dd	26
-	dd	3
-	align	4
-_71:
-	dd	_59
-	dd	28
-	dd	3
-	align	4
-_72:
-	dd	_59
-	dd	30
-	dd	3
-	align	4
 _73:
-	dd	_59
-	dd	31
+	dd	_62
+	dd	25
 	dd	3
 	align	4
 _74:
-	dd	_59
-	dd	32
+	dd	_62
+	dd	26
+	dd	3
+	align	4
+_75:
+	dd	_62
+	dd	28
 	dd	3
 	align	4
 _76:
-	dd	_59
-	dd	33
+	dd	_62
+	dd	29
+	dd	3
+	align	4
+_77:
+	dd	_62
+	dd	30
+	dd	3
+	align	4
+_78:
+	dd	_62
+	dd	31
 	dd	3
 	align	4
 _79:
-	dd	_59
-	dd	37
-	dd	2
+	dd	_62
+	dd	32
+	dd	3
 	align	4
 _81:
-	dd	_59
-	dd	38
+	dd	_62
+	dd	33
 	dd	3
 	align	4
 _84:
-	dd	_59
+	dd	_62
+	dd	37
+	dd	2
+	align	4
+_86:
+	dd	_62
+	dd	38
+	dd	3
+	align	4
+_89:
+	dd	_62
 	dd	39
 	dd	3
 	align	4
+_23:
+	dd	_bbStringClass
+	dd	2147483647
+	dd	13
+	dw	109,97,112,115,47,109,97,112,49,46,116,120,116
+	align	4
 _92:
-	dd	_59
+	dd	_62
 	dd	40
 	dd	3
 	align	4
 _95:
-	dd	_59
+	dd	_62
 	dd	44
 	dd	3
 	align	4
 _97:
-	dd	_59
+	dd	_62
 	dd	45
 	dd	3
 _113:
@@ -645,19 +680,19 @@ _113:
 	align	4
 _112:
 	dd	1
-	dd	_30
+	dd	_33
 	dd	2
 	dd	_113
-	dd	_56
+	dd	_57
 	dd	-4
 	dd	0
 	align	4
 _109:
-	dd	_59
+	dd	_62
 	dd	58
 	dd	3
 	align	4
 _111:
-	dd	_59
+	dd	_62
 	dd	61
 	dd	3
