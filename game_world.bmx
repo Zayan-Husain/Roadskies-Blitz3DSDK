@@ -1,16 +1,12 @@
-Import blitz3d.blitz3dsdk
 
-Import "player.bmx"
-Import "obstacle.bmx"
-Import "tilemap.bmx"
-Import "yengine.bmx"
+
 
 
 '////////////////game_world/////////////////////
 
 Type game_world Extends yworld
 	
-Field cl = 1, tm:ytilemap
+Field cl = 1, tm:ytilemap, score = 0, lives = 3
 		
 	Method update()
 		
@@ -46,7 +42,7 @@ Field cl = 1, tm:ytilemap
 		
 		
 		c =  bbCreateCube()
-		add( player.Create( -3, -5, 7, c, 0.2 ) )
+		add( player.Create( -3, 0, 7, c, 0.2 ) )
 		
 		Rem c2 =  bbCreateCube()
 		add( obstacle.Create( 0, -5, 18, c2, 0 ) )
@@ -55,14 +51,28 @@ Field cl = 1, tm:ytilemap
 		EndRem
 
 	
-	EndMethod
+	EndMethod' init
+	
+	
 	Method nextLevel()
-		tm.removeLevel()
+
 		cl = cl + 1
-		tm.load_map( "maps/map" + cl + ".txt" )
-		tm.make_tilemap()
+		init()
+
 		
 	EndMethod
+		
+	Method restartLevel()
+		
+		cl = cl - 1
+		lives = lives - 1
+		If lives <= 0 Then
+			
+			ye.change_world( "game_over" )
+		EndIf
+		nextLevel()
+	EndMethod
+		
 	Function Create:game_world()
 		
 		tst:game_world =  New game_world

@@ -1,8 +1,4 @@
 
-Import blitz3d.blitz3dsdk
-
-Import "obstacle.bmx"
-Import "yengine.bmx"
 
 '////////////////tilemap////////////////////
 	
@@ -47,12 +43,34 @@ Type ytilemap Extends yentity
 			world.add( o )
 		EndIf
 	
+	'   nogravity
+		If id = 5 Then 
+			c =  bbCreateCube()
+			bbEntityColor c, 0, 0, 220
+			o:obstacle =  obstacle.Create( j, -5, i, c, 0 )
+			o.yaction = "nograv"
+			world.add( o )
+		EndIf
+		If id = 6 Then
+			
+			s = bbCreateCone()
+			c = bbCreateCube()
+			bbEntityColor s, 25, 25, 25
+			o:obstacle = obstacle.Create( j, -3, i, s, 0 )
+			o.yaction = "death"
+			o.collide_c = 0.1
+			o2:obstacle = obstacle.Create(  j, -5, i, c, 0 )
+			world.add( o )
+			world.add( o2 )
+		EndIf
+	
 	End Method'end make_tile
 
 	Method removeLevel()
-		result:TList = get_by_type("obstacle")
-		For i:yentity=EachIn result
-			world.remove(i)
+		
+		result:TList = get_by_type( "obstacle" )
+		For i:yentity = EachIn result
+			world.remove( i )
 		Next
 	EndMethod
 		

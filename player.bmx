@@ -1,14 +1,11 @@
-Import blitz3d.blitz3dsdk
 
-Import "yengine.bmx"
-Import "obstacle.bmx"
 '////////////////player////////////////////
 
 Type player Extends yentity
 
 	'cams = cam speed, grav = gravity
 	Field jumping = False, cams:Float = 0.08, grav:Float = -0.5, ograv:Float = -0.5, jump_power:Float = 20
-	Field canJump = True, powerupTimer:ytimer
+	Field canJump = True, powerupTimer:ytimer, effect:String = "none"
 
 	Method init()
 	
@@ -16,7 +13,7 @@ Type player Extends yentity
 		bbEntityType grafic, 2
 		'src_type,dest_type,detectionmethod,response
 		bbCollisions 2, 1, 2, 2
-		powerupTimer = ytimer.Create( 5 )
+		powerupTimer = ytimer.Create( 25 )
 	
 	End Method'end update
 	
@@ -26,8 +23,8 @@ Type player Extends yentity
 		
 		move()
 		hit()
-		powerUp( "nogravity" );
-	
+		update_effects()
+
 	End Method'end update
 	
 	Method move()
@@ -60,6 +57,9 @@ Type player Extends yentity
 		'gravity
 		If y < -5  Then
 			jumping = False
+			' bbPositionEntity cam, 0, 0, -4
+			' gw:game_world = game_world( world )
+			' gw.restartLevel()
 		Else
 
 
@@ -96,18 +96,37 @@ Type player Extends yentity
 			
 			If o.yaction = "win" Then
 				Print  o.yaction
-				' gw:game_world = game_world( world )
-				' world.ye.change_world("win_world")
-				' gw.nextLevel();
+
+				bbPositionEntity ye.camera, 0, 0, -4
+				gw:game_world = game_world( world )
+				gw.nextLevel()
+				ye.change_world( "win_world" )
+	
 				
+				
+			EndIf'win
+			If o.yaction = "death" Then
+				bbPositionEntity ye.camera, 0, 0, -4
+				gw:game_world = game_world( world )
+				gw.restartLevel()
 			EndIf
+			
+			If o.yaction = "nograv" Then set_effect( "nogravity" )
+
+			
+			
 		EndIf
 	
 	End Method'end collide
 	
-	Method powerUp( powerup:String )
+	Method set_effect( e:String )
 		
-		If powerup = "nogravity" Then
+		effect = e
+	EndMethod
+	
+	Method update_effects()
+		
+		If effect = "nogravity" Then
 			canJump = False
 			grav = 0
 			power_up = True
@@ -115,6 +134,7 @@ Type player Extends yentity
 				power_up = False
 				grav = ograv
 				canJump = True
+				effect = "none"
 			EndIf
 		EndIf
 	EndMethod

@@ -1,5 +1,4 @@
-Import blitz3d.blitz3dsdk
-Import "yengine.bmx"
+
 '////////////////obstacle////////////////////
 
 Type obstacle Extends yentity

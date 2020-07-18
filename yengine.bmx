@@ -1,4 +1,4 @@
-Import blitz3d.blitz3dsdk
+
 
 
 
@@ -12,7 +12,7 @@ Type yengine
 	Method init()
 
 
-		worlds:TList =  New TList
+'		worlds:TList =  New TList
 
 		light=bbCreateLight()
 		camera=bbCreateCamera()
@@ -238,7 +238,9 @@ Type yentity
 	    x = bbEntityX(grafic)
 		y = bbEntityY(grafic)	
 		z = bbEntityZ(grafic)
-		'Print x+"e"
+		'Print x+"xe"
+		'Print y+"ye"
+		'Print z+"ze"
 		Rem If collide("entity",0,0,1) Then
 			Print "hit"
 		EndIf
@@ -329,11 +331,22 @@ Type yentity
 		
 	End Method 'key down
 	
+	Method sxyz(mx#=0,my#=0,mz#=0)
+		bbPositionEntity grafic,mx,my,mz
+	End Method	
+	
 	Method sy(v#)
 	
 		bbPositionEntity grafic, bbEntityX(grafic),v,bbEntityZ(grafic)
 		
 	End Method 'sy
+	
+	Method printxyz()
+		 Print x+"xe"
+		Print y+"ye"
+		Print z+"ze"
+	End Method
+	
 	
 	Function Create:yentity(x#=0,y#=0,z#=0,grafic%=0,speed#=0)
 		e:yentity = New yentity

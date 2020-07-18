@@ -1,9 +1,9 @@
 
 
 
-'////////////////win_world/////////////////////
+'////////////////game_over_world/////////////////////
 
-Type win_world Extends yworld	
+Type game_over Extends yworld	
 
 	Method init()
 		
@@ -15,7 +15,7 @@ Type win_world Extends yworld
 	
 	Method twodupdate()
 		
-		bbText 20, 20, "you win"
+		bbText 20, 20, "game over"
 		bbText 20, 40, "press space to continue"
 		
 	EndMethod
@@ -34,9 +34,9 @@ Type win_world Extends yworld
 		EndIf
 	EndMethod
 	
-	Function Create:win_world()
+	Function Create:game_over()
 		
-		tst:win_world =  New win_world
+		tst:game_over =  New game_over
 
 		
 		Return tst
@@ -46,4 +46,4 @@ Type win_world Extends yworld
 EndType
 
 
-'////////////////end win_world/////////////////////
+'////////////////end game_over_world/////////////////////
