@@ -57,9 +57,28 @@ Type ytilemap Extends yentity
 			c = bbCreateCube()
 			bbEntityColor s, 25, 25, 25
 			o:obstacle = obstacle.Create( j, -3, i, s, 0 )
-			o.yaction = "death"
+			o.ytype = "spikes"			
 			o.collide_c = 0.1
 			o2:obstacle = obstacle.Create(  j, -5, i, c, 0 )
+			world.add( o )
+			world.add( o2 )
+			o.collide_c = 0.1
+		EndIf
+		If id = 7 Then
+			
+			c = bbCreateCube()
+			o:obstacle = obstacle.Create( j, -5, i, c, 0 )
+			o.alpha( 0 )
+			world.add( o )
+		EndIf
+		'coin
+		If id = 8 Then
+			c = bbCreateSphere()
+			f = bbCreateCube()
+			bbEntityColor c, 255, 255, 0
+			o:obstacle = obstacle.Create( j, -3, i, c, 0 )
+			o2:obstacle = obstacle.Create( j, -5, i, f, 0 )
+			o.yaction = "coin"
 			world.add( o )
 			world.add( o2 )
 		EndIf

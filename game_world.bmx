@@ -6,18 +6,22 @@
 
 Type game_world Extends yworld
 	
-Field cl = 1, tm:ytilemap, score = 0, lives = 3
+Field cl = 1, tm:ytilemap, score = 0, lives = 3, maxLevels = 3
 		
 	Method update()
 		
 		Super.update()
 		
 	EndMethod
+	
+	Method twodupdate()
+		
+		bbText 75, 20, "Score: " + String( score )
+	EndMethod
 		
 	Method init()
 		
 		Super.init()
-		scaler = 2
 		skybox = bbCreateSphere( 12 )
 		clouds = bbLoadTexture( "gfx/realsky.bmp" )
 		bbScaleEntity skybox, 100, 100, 100
@@ -55,8 +59,11 @@ Field cl = 1, tm:ytilemap, score = 0, lives = 3
 	
 	
 	Method nextLevel()
-
+		
 		cl = cl + 1
+		If cl > maxLevels Then
+			cl = 1
+		EndIf
 		init()
 
 		
@@ -64,13 +71,14 @@ Field cl = 1, tm:ytilemap, score = 0, lives = 3
 		
 	Method restartLevel()
 		
-		cl = cl - 1
 		lives = lives - 1
+		init()
 		If lives <= 0 Then
+
 			
 			ye.change_world( "game_over" )
 		EndIf
-		nextLevel()
+
 	EndMethod
 		
 	Function Create:game_world()

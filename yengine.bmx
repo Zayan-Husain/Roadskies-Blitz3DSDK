@@ -90,7 +90,9 @@ Type yengine
 		EndIf
 
 		If current_world Then current_world.hide_all()	
-
+For wt:yworld=EachIn worlds
+	wt.hide_all()
+Next
 		current_world = w
 
 		current_world.show_all()
@@ -259,7 +261,9 @@ Type yentity
 	
 	Method move_by(mx#=0,my#=0,mz#=0)
 	
-		bbMoveEntity grafic ,mx#,my#,mz#
+		If grafic <> 0 Then bbMoveEntity grafic ,mx#,my#,mz#
+	
+		
 		
 	End Method	
 	
@@ -301,6 +305,7 @@ Type yentity
 		
 	Method remove()
 		bbFreeEntity grafic
+		grafic =0
 		
 	End Method ' remove
 	

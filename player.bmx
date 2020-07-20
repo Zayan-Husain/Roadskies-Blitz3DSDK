@@ -29,10 +29,10 @@ Type player Extends yentity
 	
 	Method move()
 	
-		cam = world.ye.camera
-
-	  ' bbMoveEntity cam,0,0,cams
-	   'bbMoveEntity grafic,0,0,cams
+		cam = ye.camera
+		''''''''''''''''''''''''''''''''''CAMERA CONTROL'''''''''''''''''''''''''
+	  bbMoveEntity cam, 0, 0, cams
+	  bbMoveEntity grafic, 0, 0, cams
 		
 		If kd( 200 ) Then 
 	    	bbMoveEntity cam, 0, 0, cams
@@ -55,11 +55,12 @@ Type player Extends yentity
 		EndIf
 	
 		'gravity
-		If y < -5  Then
+		If y < -15  Then
 			jumping = False
-			' bbPositionEntity cam, 0, 0, -4
-			' gw:game_world = game_world( world )
-			' gw.restartLevel()
+			 bbPositionEntity cam, 0, 0, -4
+			 gw:game_world = game_world( world )
+			 gw.restartLevel()
+			
 		Else
 
 
@@ -76,9 +77,13 @@ Type player Extends yentity
 		'collide obstacle cast yentity to obstacle
 		o:obstacle = obstacle( collide( "obstacle" ) )
 		
+		sp =  collide( "spikes", 0, 3.2 )
+		
 		top:yentity = collide( "obstacle", 0, 1 )
 		
 		front = collide( "obstacle", 0, -1, -1 )
+		
+		
 		If top Then 
 			'move_by(0,2.5,0)
 			sy( top.y+1 )
@@ -90,8 +95,8 @@ Type player Extends yentity
 		EndIf
 		
 		'If front Then Print "hit"
-		Local id:TTypeId = TTypeId.ForObject( o )
-		'Print id.Name()
+
+		'/////action collide
 		If o  And o.yaction Then
 			
 			If o.yaction = "win" Then
@@ -100,24 +105,26 @@ Type player Extends yentity
 				bbPositionEntity ye.camera, 0, 0, -4
 				gw:game_world = game_world( world )
 				gw.nextLevel()
-				ye.change_world( "win_world" )
-	
-				
-				
+				ye.change_world( "win_world" )		
 			EndIf'win
-			If o.yaction = "death" Then
+	
+			
+			If o.yaction = "nograv" Then set_effect( "nogravity" )	
+			If o.yaction = "coin" Then
+				
+				gw:game_world = game_world( world )
+				gw.score = gw.score + 5
+				world.remove( o )
+			EndIf
+		EndIf' yaction
+		
+		If sp Then
 				bbPositionEntity ye.camera, 0, 0, -4
 				gw:game_world = game_world( world )
 				gw.restartLevel()
-			EndIf
-			
-			If o.yaction = "nograv" Then set_effect( "nogravity" )
-
-			
-			
 		EndIf
 	
-	End Method'end collide
+	End Method'end collide ////////////////////
 	
 	Method set_effect( e:String )
 		

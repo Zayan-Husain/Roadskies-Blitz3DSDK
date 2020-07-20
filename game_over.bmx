@@ -8,9 +8,6 @@ Type game_over Extends yworld
 	Method init()
 		
 		Super.init()
-		
-		
-		
 	EndMethod
 	
 	Method twodupdate()
