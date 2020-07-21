@@ -22,6 +22,8 @@ Field cl = 1, tm:ytilemap, score = 0, lives = 3, maxLevels = 3
 	Method init()
 		
 		Super.init()
+		
+		'init skybox
 		skybox = bbCreateSphere( 12 )
 		clouds = bbLoadTexture( "gfx/realsky.bmp" )
 		bbScaleEntity skybox, 100, 100, 100
@@ -35,8 +37,8 @@ Field cl = 1, tm:ytilemap, score = 0, lives = 3, maxLevels = 3
 		add( skb )
 
 
-
-	tm = ytilemap.Create()
+		'init level tilemap
+		tm = ytilemap.Create()
 		add( tm )
 		tm.load_map( "maps/map" + cl + ".txt" )
 		tm.make_tilemap()
@@ -44,7 +46,7 @@ Field cl = 1, tm:ytilemap, score = 0, lives = 3, maxLevels = 3
 		'nextLevel()
 		
 		
-		
+		'init player
 		c =  bbCreateCube()
 		add( player.Create( -3, 0, 7, c, 0.2 ) )
 		

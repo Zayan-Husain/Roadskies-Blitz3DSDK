@@ -222,7 +222,7 @@ Type yentity
 	Field x#,y#,z#,speed#,grafic,ytype$="entity",world:yworld,collide_c# = 2
 	
 	Method init()
-		Print "init entity"
+		'Print "init entity"
 		
 		If grafic<> Null Then
 		bbPositionEntity grafic,x,y,z
@@ -396,4 +396,24 @@ Type ytimer
 End Type
 
 
+'//////////////////helper funcs/////////////////////////
 
+
+Function ycount_filis_in_dir:Int(dirn$)
+
+	dir=ReadDir(dirn)
+	
+	c=0
+	
+	Repeat
+		t$=NextFile( dir )
+		If t="" Exit
+		If t="." Or t=".." Continue
+		'Print t	
+		c=c+1
+	Forever
+	
+
+
+	Return c
+EndFunction

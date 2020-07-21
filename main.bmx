@@ -29,7 +29,11 @@ EndIf
 '//start engine
 Global ye:yengine = yengine.Create()
 
-tst  = game_world.Create()
+'get number of files in levels dir
+levelsn = ycount_filis_in_dir("maps")
+
+tst:game_world  = game_world.Create()
+tst.maxLevels = levelsn 'set number of levels
 
 winw =  win_world.Create()
 

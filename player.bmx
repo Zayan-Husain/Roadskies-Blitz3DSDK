@@ -116,6 +116,14 @@ Type player Extends yentity
 				gw.score = gw.score + 5
 				world.remove( o )
 			EndIf
+			
+			'telport to level start
+			If o.yaction = "telports" Then
+				'reset camera and player pos
+				bbPositionEntity  ye.camera, 0, 0, -4
+				sxyz( -3, 0, 7 )
+			EndIf
+			
 		EndIf' yaction
 		
 		If sp Then

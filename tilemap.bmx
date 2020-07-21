@@ -9,11 +9,13 @@ Type ytilemap Extends yentity
 	
 	Method make_tile( id:String, j, i )
 		
+		'floor
 		If id = 1 Then
 			c =  bbCreateCube()
 			o:obstacle =  obstacle.Create( j, -5, i, c, 0 )
 			world.add( o )
 		EndIf
+		'2floor
 		If id = 2 Then
 			c1 =  bbCreateCube()
 			c2 =  bbCreateCube()
@@ -23,6 +25,7 @@ Type ytilemap Extends yentity
 			world.add( o )
 			world.add( o2 )
 		EndIf
+		'3rd floor
 		If id = 3 Then
 			c1 =  bbCreateCube()
 			c2 =  bbCreateCube()
@@ -35,6 +38,7 @@ Type ytilemap Extends yentity
 			world.add( o2 )
 			world.add( o3 )
 		EndIf
+		'win tile
 		If id = 4 Then
 			c =  bbCreateCube()
 			bbEntityColor c, 255, 150, 0
@@ -51,6 +55,7 @@ Type ytilemap Extends yentity
 			o.yaction = "nograv"
 			world.add( o )
 		EndIf
+		'spikes
 		If id = 6 Then
 			
 			s = bbCreateCone()
@@ -64,6 +69,7 @@ Type ytilemap Extends yentity
 			world.add( o2 )
 			o.collide_c = 0.1
 		EndIf
+		'invisable floor
 		If id = 7 Then
 			
 			c = bbCreateCube()
@@ -78,6 +84,25 @@ Type ytilemap Extends yentity
 			bbEntityColor c, 255, 255, 0
 			o:obstacle = obstacle.Create( j, -3, i, c, 0 )
 			o2:obstacle = obstacle.Create( j, -5, i, f, 0 )
+			o.yaction = "coin"
+			world.add( o )
+			world.add( o2 )
+		EndIf
+		'teleport too level start
+		If id = 9 Then
+			c =  bbCreateCube()
+			bbEntityColor c, 255, 150, 50
+			o:obstacle =  obstacle.Create( j, -5, i, c, 0 )
+			o.yaction = "telports"
+			world.add( o )
+		EndIf
+		If id = -8 Then
+			c = bbCreateSphere()
+			f = bbCreateCube()
+			bbEntityColor c, 255, 255, 0
+			o:obstacle = obstacle.Create( j, -3, i, c, 0 )
+			o2:obstacle = obstacle.Create( j, -5, i, f, 0 )
+			o2.alpha( 0 )
 			o.yaction = "coin"
 			world.add( o )
 			world.add( o2 )
@@ -125,7 +150,7 @@ Type ytilemap Extends yentity
 		mapfile = ReadFile( filen )
 		'if no file exit
 		If Not mapfile Then Return
-		Print "--map file "+filen+" loaded--"
+		' Print "--map file "+filen+" loaded--"
 		'init temp string andstring array
 		Local sr:String[]
 		Local s:String
