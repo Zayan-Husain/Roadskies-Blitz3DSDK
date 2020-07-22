@@ -1,4 +1,5 @@
 # Roadskies
+To play the game, go to the dist folder and double click on "game.exe".
 
 Roadskies is inspired by Skyroads (dos game) It was made with BlitzMax and Blitz3DSDK
 
