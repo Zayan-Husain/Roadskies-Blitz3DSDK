@@ -12,12 +12,19 @@ The map will be added to the game automatically.
 To create a map, make a visualization of the map in the ".txt" file you created. Like this.
 
 1,1,1,1,1,1,1,
+
 1,1,1,1,1,1,1,
+
 1,1,1,1,1,1,1,
+
 1,1,1,2,1,1,1,
+
 1,1,1,3,1,1,1,
+
 1,1,9,8,9,1,1,
+
 1,1,4,6,4,1,1,
+
 1,1,-8,6,-8,1,1,
 
 1 means block,
