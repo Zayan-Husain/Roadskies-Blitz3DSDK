@@ -11,6 +11,7 @@ Include "player.bmx"
 Include "obstacle.bmx"
 Include "tilemap.bmx"
 Include "game_over.bmx"
+Include "start_screen.bmx"
 
 
 
@@ -29,6 +30,9 @@ EndIf
 '//start engine
 Global ye:yengine = yengine.Create()
 
+start = start_screen.Create()
+
+
 'get number of files in levels dir
 levelsn = ycount_filis_in_dir("maps")
 
@@ -39,11 +43,12 @@ winw =  win_world.Create()
 
 _game_over = game_over.Create()
 
+ye.add_world( start , "start_screen" )
 ye.add_world( tst, "game_world" )
 ye.add_world( winw, "win_world" )
 ye.add_world( _game_over, "game_over" )
 
-ye.change_world( "game_world" )
+ye.change_world( "start_screen" )
 
 
 

@@ -38,10 +38,6 @@ Type player Extends yentity
 	    	bbMoveEntity cam, 0, 0, cams
 	    	bbMoveEntity grafic, 0, 0, cams
 		EndIf
-		If kd( 208 ) Then  
-	    	bbMoveEntity cam, 0, 0, -cams
-	    	bbMoveEntity grafic, 0, 0, -cams		
-		EndIf
 
 		'left right
 		If kd( 203 ) Then move_by( -speed, 0, 0 )
